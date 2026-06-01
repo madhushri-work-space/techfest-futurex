@@ -25,5 +25,21 @@ JavaScript
 Particles.js
 Google Fonts (Orbitron)
 Interactive user experience
+
+🌐 Live Demo
+Netlify Deployment:
+https://techfestfuturex.netlify.app/
+
+🎥 Demo Video
+https://tinyurl.com/4cwzmtyt
+
+
+
+
+
+
+
+
+
 Animated transitions and hover effects
 Techfest-inspired visual identity
