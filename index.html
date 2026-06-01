@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>TECHFEST FUTUREX</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:'Orbitron',sans-serif;
+      background:#050816;
+      color:white;
+      overflow-x:hidden;
+      cursor:none;
+    }
+
+    /* PARTICLES */
+
+    #particles-js{
+      position:fixed;
+      width:100%;
+      height:100%;
+      z-index:-10;
+    }
+
+    /* GLOW CURSOR */
+
+    .cursor{
+      width:20px;
+      height:20px;
+      background:#00f7ff;
+      border-radius:50%;
+      position:fixed;
+      pointer-events:none;
+      transform:translate(-50%,-50%);
+      box-shadow:0 0 30px #00f7ff;
+      z-index:9999;
+    }
+
+    /* LOADER */
+
+    #loader{
+      position:fixed;
+      width:100%;
+      height:100vh;
+      background:black;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      z-index:99999;
+    }
+
+    #loader h1{
+      color:#00f7ff;
+      animation:pulse 1s infinite;
+    }
+
+    @keyframes pulse{
+      0%{opacity:0.5;}
+      100%{opacity:1;}
+    }
+
+    /* PROGRESS BAR */
+
+    #progress-bar{
+      position:fixed;
+      top:0;
+      left:0;
+      width:0%;
+      height:4px;
+      background:#00f7ff;
+      z-index:99999;
+      box-shadow:0 0 15px #00f7ff;
+    }
+
+    /* NAVBAR */
+
+    nav{
+      position:fixed;
+      width:100%;
+      padding:25px 8%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      backdrop-filter:blur(10px);
+      background:rgba(255,255,255,0.05);
+      z-index:999;
+    }
+
+    .logo{
+      color:#00f7ff;
+      font-size:2rem;
+      text-shadow:0 0 15px #00f7ff;
+    }
+
+    nav ul{
+      display:flex;
+      list-style:none;
+      gap:30px;
+    }
+
+    nav a{
+      text-decoration:none;
+      color:white;
+      transition:0.3s;
+    }
+
+    nav a:hover{
+      color:#00f7ff;
+    }
+
+    /* HERO */
+
+    .hero{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 8%;
+      gap:50px;
+    }
+
+    .hero-content{
+      flex:1;
+    }
+
+    .typing{
+      font-size:4rem;
+      color:#00f7ff;
+      text-shadow:0 0 20px #00f7ff;
+    }
+
+    .hero-content p{
+      margin-top:25px;
+      line-height:1.8;
+      color:#b7b7b7;
+      max-width:550px;
+    }
+
+    /* NEON BUTTON */
+
+    .neon-btn{
+      margin-top:30px;
+      padding:16px 40px;
+      border:none;
+      border-radius:50px;
+      background:#00f7ff;
+      color:black;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+      box-shadow:
+      0 0 10px #00f7ff,
+      0 0 30px #00f7ff,
+      0 0 60px #00f7ff;
+    }
+
+    .neon-btn:hover{
+      transform:scale(1.08);
+    }
+
+    /* HERO IMAGE */
+
+    .hero-image{
+      flex:1;
+      display:flex;
+      justify-content:center;
+    }
+
+    .hero-image img{
+      width:100%;
+      max-width:450px;
+      border-radius:20px;
+      animation:float 3s infinite ease-in-out;
+    }
+
+    @keyframes float{
+
+      0%{
+        transform:translateY(0px);
+      }
+
+      50%{
+        transform:translateY(-20px);
+      }
+
+      100%{
+        transform:translateY(0px);
+      }
+
+    }
+
+    /* HOLOGRAM EFFECT */
+
+    .hologram img{
+      animation:holo 4s infinite alternate;
+    }
+
+    @keyframes holo{
+
+      0%{
+        filter:hue-rotate(0deg);
+      }
+
+      100%{
+        filter:hue-rotate(60deg) brightness(1.2);
+      }
+
+    }
+
+    /* CARDS */
+
+    .cards{
+      padding:100px 8%;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:30px;
+    }
+
+    .card{
+      background:rgba(255,255,255,0.05);
+      padding:30px;
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,0.1);
+      backdrop-filter:blur(10px);
+      transition:0.5s;
+    }
+
+    .card:hover{
+      transform:translateY(-10px);
+      border-color:#00f7ff;
+      box-shadow:0 0 25px rgba(0,247,255,0.5);
+    }
+
+    .card h3{
+      color:#00f7ff;
+      margin-bottom:15px;
+    }
+
+    /* STATS */
+
+    .stats{
+      padding:100px 8%;
+      display:flex;
+      justify-content:space-around;
+      text-align:center;
+      flex-wrap:wrap;
+      gap:40px;
+    }
+
+    .stat h1{
+      color:#00f7ff;
+      font-size:4rem;
+    }
+
+    /* COUNTDOWN */
+
+    .countdown{
+      padding:100px 8%;
+      text-align:center;
+    }
+
+    .timer{
+      margin-top:40px;
+      display:flex;
+      justify-content:center;
+      gap:30px;
+      flex-wrap:wrap;
+    }
+
+    .timer div{
+      background:rgba(255,255,255,0.05);
+      padding:30px;
+      border-radius:20px;
+      min-width:120px;
+      backdrop-filter:blur(10px);
+    }
+
+    .timer span{
+      font-size:3rem;
+      color:#00f7ff;
+    }
+
+    /* CHATBOT */
+
+    .chatbot{
+      padding:100px 8%;
+      text-align:center;
+    }
+
+    .chat-box{
+      max-width:700px;
+      margin:auto;
+      margin-top:30px;
+      background:rgba(255,255,255,0.05);
+      padding:30px;
+      border-radius:20px;
+      backdrop-filter:blur(10px);
+    }
+
+    .messages{
+      min-height:200px;
+      text-align:left;
+    }
+
+    .bot-msg,.user-msg{
+      margin:15px 0;
+      padding:12px;
+      border-radius:10px;
+    }
+
+    .bot-msg{
+      background:#111827;
+      color:#00f7ff;
+    }
+
+    .user-msg{
+      background:#00f7ff;
+      color:black;
+    }
+
+    .input-area{
+      display:flex;
+      gap:10px;
+      margin-top:20px;
+    }
+
+    .input-area input{
+      flex:1;
+      padding:15px;
+      border:none;
+      border-radius:10px;
+      background:#111827;
+      color:white;
+    }
+
+    .input-area button{
+      padding:15px 25px;
+      border:none;
+      border-radius:10px;
+      background:#00f7ff;
+      font-weight:bold;
+    }
+
+    /* REVEAL */
+
+    .reveal{
+      opacity:0;
+      transform:translateY(100px);
+      transition:1s;
+    }
+
+    .reveal.active{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    /* MOBILE */
+
+    @media(max-width:900px){
+
+      .hero{
+        flex-direction:column;
+        text-align:center;
+        padding-top:150px;
+      }
+
+      .typing{
+        font-size:2.5rem;
+      }
+
+      nav ul{
+        display:none;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- LOADER -->
+
+  <div id="loader">
+
+    <h1>INITIALIZING TECHFEST...</h1>
+
+  </div>
+
+  <!-- CURSOR -->
+
+  <div class="cursor"></div>
+
+  <!-- PROGRESS BAR -->
+
+  <div id="progress-bar"></div>
+
+  <!-- PARTICLES -->
+
+  <div id="particles-js"></div>
+
+  <!-- NAVBAR -->
+
+  <header>
+
+    <nav>
+
+      <h1 class="logo">TECHFEST FUTUREX</h1>
+
+      <ul>
+
+        <li><a href="#">Events</a></li>
+        <li><a href="#">Competitions</a></li>
+        <li><a href="#">Workshops</a></li>
+        <li><a href="#">Exhibitions</a></li>
+        <li><a href="#">Sponsors</a></li>
+
+      </ul>
+
+    </nav>
+
+  </header>
+
+  <!-- HERO -->
+
+  <section class="hero reveal">
+
+    <div class="hero-content">
+
+      <h2 class="typing"></h2>
+
+      <p>
+        Welcome to the next dimension of technology, innovation,
+        robotics, AI, aerospace systems, and futuristic engineering.
+      </p>
+
+      <button class="neon-btn">REGISTER NOW</button>
+
+    </div>
+
+    <div class="hero-image hologram">
+
+      <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop">
+
+    </div>
+
+  </section>
+
+  <!-- FEATURES -->
+
+  <section class="cards">
+
+    <div class="card reveal">
+      <h3>Robowars</h3>
+      <p>Witness high-intensity robotic battles.</p>
+    </div>
+
+    <div class="card reveal">
+      <h3>AI Revolution</h3>
+      <p>Explore cutting-edge artificial intelligence systems.</p>
+    </div>
+
+    <div class="card reveal">
+      <h3>Space Tech</h3>
+      <p>Experience futuristic aerospace innovations.</p>
+    </div>
+
+    <div class="card reveal">
+      <h3>Drone Arena</h3>
+      <p>Immersive autonomous drone demonstrations.</p>
+    </div>
+
+  </section>
+
+  <!-- STATS -->
+
+  <section class="stats reveal">
+
+    <div class="stat">
+      <h1>50K+</h1>
+      <p>Participants</p>
+    </div>
+
+    <div class="stat">
+      <h1>500+</h1>
+      <p>Events</p>
+    </div>
+
+    <div class="stat">
+      <h1>100+</h1>
+      <p>Workshops</p>
+    </div>
+
+  </section>
+
+  <!-- COUNTDOWN -->
+
+  <section class="countdown reveal">
+
+    <h2>TECHFEST BEGINS IN</h2>
+
+    <div class="timer">
+
+      <div>
+        <span id="days">00</span>
+        <p>DAYS</p>
+      </div>
+
+      <div>
+        <span id="hours">00</span>
+        <p>HOURS</p>
+      </div>
+
+      <div>
+        <span id="minutes">00</span>
+        <p>MINUTES</p>
+      </div>
+
+      <div>
+        <span id="seconds">00</span>
+        <p>SECONDS</p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- CHATBOT -->
+
+  <section class="chatbot reveal">
+
+    <h2>AI ASSISTANT</h2>
+
+    <div class="chat-box">
+
+      <div class="messages">
+
+        <div class="bot-msg">
+          Welcome to Techfest FutureX. Ask me anything.
+        </div>
+
+      </div>
+
+      <div class="input-area">
+
+        <input type="text" id="userInput" placeholder="Ask something...">
+
+        <button id="sendBtn">SEND</button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <script>
+
+    // LOADER
+
+    window.addEventListener("load",()=>{
+
+      setTimeout(()=>{
+
+        document.getElementById("loader").style.display="none";
+
+      },2000);
+
+    });
+
+    // CURSOR
+
+    const cursor=document.querySelector(".cursor");
+
+    document.addEventListener("mousemove",(e)=>{
+
+      cursor.style.left=e.clientX+"px";
+      cursor.style.top=e.clientY+"px";
+
+    });
+
+    // TYPING EFFECT
+
+    const text="ENGINEERING THE FUTURE.";
+    let index=0;
+
+    function type(){
+
+      if(index<text.length){
+
+        document.querySelector(".typing").innerHTML += text.charAt(index);
+
+        index++;
+
+        setTimeout(type,100);
+
+      }
+
+    }
+
+    type();
+
+    // PARTICLES
+
+    particlesJS("particles-js",{
+
+      particles:{
+
+        number:{value:100},
+
+        color:{value:"#00f7ff"},
+
+        shape:{type:"circle"},
+
+        opacity:{value:0.5},
+
+        size:{value:3},
+
+        move:{
+          enable:true,
+          speed:2
+        }
+
+      }
+
+    });
+
+    // REVEAL
+
+    window.addEventListener("scroll",reveal);
+
+    function reveal(){
+
+      const reveals=document.querySelectorAll(".reveal");
+
+      for(let i=0;i<reveals.length;i++){
+
+        const windowHeight=window.innerHeight;
+
+        const revealTop=reveals[i].getBoundingClientRect().top;
+
+        const revealPoint=100;
+
+        if(revealTop < windowHeight - revealPoint){
+
+          reveals[i].classList.add("active");
+
+        }
+
+      }
+
+    }
+
+    // PROGRESS BAR
+
+    window.addEventListener("scroll",()=>{
+
+      let winScroll=document.body.scrollTop || document.documentElement.scrollTop;
+
+      let height=document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+      let scrolled=(winScroll / height) * 100;
+
+      document.getElementById("progress-bar").style.width=scrolled + "%";
+
+    });
+
+    // BUTTON EFFECT
+
+    document.querySelector(".neon-btn").addEventListener("mousemove",(e)=>{
+
+      const x=e.offsetX;
+      const y=e.offsetY;
+
+      e.target.style.background=`radial-gradient(circle at ${x}px ${y}px,#ffffff,#00f7ff)`;
+
+    });
+
+    // COUNTDOWN
+
+    const targetDate = new Date("Dec 22, 2025 00:00:00").getTime();
+
+    setInterval(()=>{
+
+      const now = new Date().getTime();
+
+      const distance = targetDate - now;
+
+      const days = Math.floor(distance / (1000*60*60*24));
+
+      const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+
+      const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+
+      const seconds = Math.floor((distance % (1000*60)) / 1000);
+
+      document.getElementById("days").innerHTML = days;
+      document.getElementById("hours").innerHTML = hours;
+      document.getElementById("minutes").innerHTML = minutes;
+      document.getElementById("seconds").innerHTML = seconds;
+
+    },1000);
+
+    // CHATBOT
+
+    const sendBtn=document.getElementById("sendBtn");
+
+    sendBtn.addEventListener("click",()=>{
+
+      const input=document.getElementById("userInput");
+
+      const msg=input.value;
+
+      if(msg==="") return;
+
+      const messages=document.querySelector(".messages");
+
+      const userDiv=document.createElement("div");
+
+      userDiv.classList.add("user-msg");
+
+      userDiv.innerText=msg;
+
+      messages.appendChild(userDiv);
+
+      input.value="";
+
+      setTimeout(()=>{
+
+        const botDiv=document.createElement("div");
+
+        botDiv.classList.add("bot-msg");
+
+        botDiv.innerText="AI RESPONSE: Accessing Techfest database...";
+
+        messages.appendChild(botDiv);
+
+      },1000);
+
+    });
+
+  </script>
+
+</body>
+
+</html>
